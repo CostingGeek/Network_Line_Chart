@@ -1,0 +1,87 @@
+var jsonData = 
+[
+  {
+    "Id":"1",
+    "Name":"Version 1",
+    "Predecessor":"",
+    "Date":"2015-01-01",
+    "Value":1000
+  },
+  {
+    "Id":"2",
+    "Name":"Version 2",
+    "Predecessor":"1",
+    "Date":"2015-03-01",
+    "Value":877
+  },
+  {
+    "Id":"3",
+    "Name":"Version 3",
+    "Predecessor":"",
+    "Date":"2015-04-01",
+    "Value":969
+  },
+  {
+    "Id":"4",
+    "Name":"Version 4",
+    "Predecessor":"3",
+    "Date":"2015-06-01",
+    "Value":898
+  },
+  {
+    "Id":"5",
+    "Name":"Version 5",
+    "Predecessor":"2",
+    "Date":"2015-07-01",
+    "Value":881
+  },
+  {
+    "Id":"6",
+    "Name":"Version 6",
+    "Predecessor":"4",
+    "Date":"2015-09-01",
+    "Value":708
+  },
+  {
+    "Id":"7",
+    "Name":"Version 7",
+    "Predecessor":"5",
+    "Date":"2015-10-01",
+    "Value":825
+  },
+  {
+    "Id":"8",
+    "Name":"Version 8",
+    "Predecessor":"7",
+    "Date":"2015-12-01",
+    "Value":688
+  },
+  {
+    "Id":"9",
+    "Name":"Version 9",
+    "Predecessor":"6",
+    "Date":"2016-01-01",
+    "Value":631
+  },
+  {
+    "Id":"10",
+    "Name":"Version 10",
+    "Predecessor":"8",
+    "Date":"2016-01-15",
+    "Value":664
+  },
+  {
+    "Id":"11",
+    "Name":"Version 11",
+    "Predecessor":"8",
+    "Date":"2016-02-15",
+    "Value":604
+  },
+  {
+    "Id":"12",
+    "Name":"Version 12",
+    "Predecessor":"5",
+    "Date":"2015-08-15",
+    "Value":904
+  }
+];

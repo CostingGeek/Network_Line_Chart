@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+	<div id="chart"></div>
+
+	<script src="network_data.json"></script>
+	<script src="network_line.js"></script>
+	<script>
+		var width   = 800;
+		var height  = 500;
+		var minwh   = Math.min( width, height );
+		var padding = 50;
+		
+		var heightScale = d3.scale.linear()
+			.domain( [ 0, d3.max( jsonData, function(d) { return d.Value; } ) ] )
+			.range( [ height - padding, padding ] );
+
+		var xMin = d3.min( jsonData, function( d ) { return new Date( d.Date ); } );
+		var xMax = d3.max( jsonData, function( d ) { return new Date( d.Date ); } );
+		
+		var widthScale = d3.time.scale()
+			.domain( [ xMin, xMax ] )
+			.range( [ padding, width - padding ] );
+		
+		var colorScale = d3.scale.category10();
+		
+		var canvas = d3.select( 'body' )
+			.append( 'svg:svg' )
+				.attr( 'width', '95%' )
+				.attr( 'height', '95%' )
+				.attr( 'viewBox','0 0 ' + minwh + ' ' + minwh )
+				.attr( 'preserveAspectRatio', 'xMinYMin' );
+			
+		var xAxis = d3.svg.axis()
+			.scale( widthScale )
+			.tickFormat( d3.time.format("%b %y") );
+		
+		canvas.append( 'svg:g' )
+            .call( xAxis )
+			.attr( 'transform', 'translate(0,' + ( height - padding ) + ')' )
+			.attr( 'class',     'axis');
+		
+		var yAxis = d3.svg.axis()
+            .scale( heightScale )
+            .orient( 'left' )
+            .ticks( 5 );
+		
+		canvas.append( 'svg:g' )
+			.call( yAxis )
+			.attr( 'transform', 'translate(' + padding + ', 0 )' )
+			.attr( 'class', 'axis' );
+		
+		var line = d3.svg.line()
+			.x( function( d ) { return widthScale(  new Date( d.Date ) ); } )
+			.y( function( d ) { return heightScale( d.Value ); } )
+			.interpolate('cardinal');
+
+		for( i = 0; i < pathArray.length; i++ )
+		{
+			var tmpData = new Array();
+
+			for( j = 0; j < pathArray[i].length; j++ )
+			{ 
+					key = jsonMap[ pathArray[i][j] ];
+					tmpData.push( jsonData[key] );
+			}
+			
+			var lineGraph = canvas.append( 'svg:path' )
+					.attr( 'd', line( tmpData ) )
+					.attr( 'class', 'path' )
+					.attr( 'stroke', colorScale(i) );
+		}
+	
+		var points = canvas.selectAll( 'circle' )
+			.data( jsonData )
+			.enter()
+			.append( 'svg:circle' )
+				.attr( 'r', 3 )
+				.attr( 'cx', function( d ) { return widthScale(  new Date( d.Date ) ); } )
+				.attr( 'cy', function( d ) { return heightScale( d.Value ); } )
+				.attr( 'class', 'point' );
+
+		var tooltip = d3.select("#chart")
+			.append('div')
+				.attr('class', 'tooltip');
+		tooltip.append('div')
+				.attr('class', 'label');
+		tooltip.append('div')                        
+				.attr('class', 'date');
+		tooltip.append('div')                        
+				.attr('class', 'value');
+
+		points.on('mouseover', function(d) {
+			var date = new Date( d.Date );
+			
+			tooltip.select('.label').html( "<b>" + d.Name + "</b>" );
+			tooltip.select('.date').html( "Date: " + date.toLocaleDateString("en-US") );
+			tooltip.select('.value').html( "Value: " + d.Value );
+			tooltip.style('display', 'block')
+			    .style('left', ( d3.event.pageX + 10 ) + "px")
+				.style('top',  ( d3.event.pageY + 10 ) + "px");
+		});
+
+		points.on('mouseout', function(d) {
+			tooltip.style('display', 'none');
+		});
+
+	</script>
+</body>
+</html>

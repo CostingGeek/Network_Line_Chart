@@ -1,0 +1,58 @@
+html,
+body {
+	margin:0;
+	padding:0;
+	width:100%;
+	height:100%;
+}
+
+.point {
+	fill: white;
+	stroke: darkgrey;
+	stroke-width: 2;
+	stroke-opacity: .5;
+}
+
+.point:hover {
+	stroke-opacity: 1;
+}
+
+.path {
+//	stroke: darkblue;
+	stroke-width: 2;
+	fill: none;
+	opacity: .5;
+	z-index: 1;
+}
+
+.path:hover {
+	opacity: 1;
+	z-index: 9;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	font-family: sans-serif;
+	font-size: 11px;
+}
+
+.tooltip {
+	background: #eee;
+	box-shadow: 0 0 5px #999999;
+	color: #333;
+	display: none;
+	font-size: 12px;
+	left: 130px;
+	padding: 10px;
+	position: absolute;
+	text-align: left;
+	top: 95px;
+	width: 80px;
+	z-index: 10;
+}
